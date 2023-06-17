@@ -77,3 +77,9 @@ textarea {
 textarea:focus {
   outline: none;
 }
+.note-text {
+  font-size: 16px;
+  background: none;
+  border: none;
+  height: 87%;
+}

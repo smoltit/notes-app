@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
+import Note from "./components/Note";
+import NewNote from "./components/NewNote";
+import { nanoid } from "nanoid";
 
-function App() {
-
+function App(props) {
+  const [notes, setNotes] = useState(props.notes);
+  function addNote(name, time) {
+    const newNote = {id: `note-${nanoid}`, name, time};
+    setNotes([...notes, newNote]);
+  }
+  const noteList = notes
+  .map((note) => (
+    <Note id={note.id} name={note.name} key={note.id} time={note.time} />
+  ))
   return (
     <div className="App">
       <header>
@@ -11,43 +22,11 @@ function App() {
       <main>
         <input type="text" className="searchbar" placeholder="type to search..." />
         <div className="notes">
-          <div className="note">
-            <p>My note</p>
-            <div className="note-bottom">
-              <p>17/06/2023</p>
-              <button className="trash">
-                <img src={"https://cdn-icons-png.flaticon.com/512/860/860778.png"} alt="" />
-              </button>
-            </div>
-          </div>
-          <div className="note">
-            <p>My note</p>
-            <div className="note-bottom">
-              <p>17/06/2023</p>
-              <button className="trash">
-                <img src={"https://cdn-icons-png.flaticon.com/512/860/860778.png"} alt="" />
-              </button>
-            </div>
-          </div>
-          <div className="note">
-            <p>My note</p>
-            <div className="note-bottom">
-              <p>17/06/2023</p>
-              <button className="trash">
-                <img src={"https://cdn-icons-png.flaticon.com/512/860/860778.png"} alt="" />
-              </button>
-            </div>
-          </div>
-          <div className="note">
-            <textarea className="newnote" placeholder="Start a new note..."></textarea>
-            <div className="note-bottom">
-              <p>200 remaining</p>
-              <div className="buttons-bottom">
-                <button className="btn btn-bottom">Cancel</button>
-                <button className="btn btn-bottom">Save</button>
-              </div>
-            </div>
-          </div>
+          
+          
+          {noteList}
+
+          <NewNote addNote={addNote}/>
         </div>
       </main>
     </div>
