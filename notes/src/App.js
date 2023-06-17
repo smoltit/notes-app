@@ -6,13 +6,18 @@ import { nanoid } from "nanoid";
 function App(props) {
   const [notes, setNotes] = useState(props.notes);
   function addNote(name, time) {
-    const newNote = {id: `note-${nanoid}`, name, time};
+    const newNote = {id: nanoid(), name, time, key: nanoid()};
     setNotes([...notes, newNote]);
+    console.log(notes);
   }
   const noteList = notes
   .map((note) => (
-    <Note id={note.id} name={note.name} key={note.id} time={note.time} />
-  ))
+    <Note id={note.id} name={note.name} time={note.time} deleteNote={deleteNote} />
+  ));
+  function deleteNote(id) {
+    const remainingNotes = notes.filter((note) => id != note.id);
+    setNotes(remainingNotes);
+  }
   return (
     <div className="App">
       <header>
