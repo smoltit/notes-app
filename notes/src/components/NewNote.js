@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { nanoid } from "nanoid";
 
 function NewNote(props) {
   const date = new Date();
@@ -13,7 +14,7 @@ function NewNote(props) {
   function handleSubmit() {
       if (document.getElementById('txtarea').value.length > 0) {
         var text = document.getElementById("txtarea").value;
-        props.addNote(text, currentDate);
+        props.addNote(text, currentDate, nanoid());
         document.getElementById("txtarea").value = "";
         setLength(500);
       }

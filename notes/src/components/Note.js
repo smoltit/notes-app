@@ -3,7 +3,7 @@ import React from "react";
 function Note(props) {
     return(
         <div className="note">
-            <textarea className="note-text" readOnly={true}>{props.name}</textarea>
+            <p className="note-text">{props.name}</p>
             <div className="note-bottom">
               <p>{props.time}</p>
               <button className="trash" onClick={() => props.deleteNote(props.id)}>

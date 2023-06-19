@@ -1,22 +1,24 @@
 import React, { useState } from "react";
 import Note from "./components/Note";
 import NewNote from "./components/NewNote";
-import { nanoid } from "nanoid";
 
-function App(props) {
-  const [notes, setNotes] = useState(props.notes);
-  function addNote(name, time) {
-    const newNote = {id: nanoid(), name, time, key: nanoid()};
+function App() {
+  const [notes, setNotes] = useState([]);
+  function addNote(name, time, id) {
+    const newNote = {id, name, time, key: id};
     setNotes([...notes, newNote]);
-    console.log(notes);
   }
-  const noteList = notes
-  .map((note) => (
-    <Note id={note.id} name={note.name} time={note.time} deleteNote={deleteNote} />
-  ));
+  function noteList() {
+    return notes
+    .map((note) => (
+      <Note id={note.id} name={note.name} time={note.time} deleteNote={deleteNote} />
+    ));
+  }
   function deleteNote(id) {
-    const remainingNotes = notes.filter((note) => id != note.id);
-    setNotes(remainingNotes);
+    setNotes(prevNotes => {
+      const remainingNotes = prevNotes.filter(note => id !== note.id);
+      return remainingNotes;
+    });
   }
   return (
     <div className="App">
@@ -29,7 +31,7 @@ function App(props) {
         <div className="notes">
           
           
-          {noteList}
+          {noteList()}
 
           <NewNote addNote={addNote}/>
         </div>
