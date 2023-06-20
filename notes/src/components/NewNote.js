@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { nanoid } from "nanoid";
 
 function NewNote(props) {
+  
+  const [length, setLength] = useState(500);
+  const [text, setText] = useState("");
+  
   const date = new Date();
 
   let day = date.getDate();
@@ -10,9 +14,6 @@ function NewNote(props) {
 
   let currentDate = `${day}/${month}/${year}`;
 
-  const [length, setLength] = useState(500);
-  const [text, setText] = useState("");
-
   function handleSubmit() {
     if (text.length > 0) {
       props.addNote(text, currentDate, nanoid());
@@ -20,17 +21,14 @@ function NewNote(props) {
       setLength(500);
     }
   }
-
   function handleCancel() {
     setText("");
     setLength(500);
   }
-
   function handleInputChange(event) {
     setText(event.target.value);
     setLength(500 - event.target.value.length);
   }
-
   function handleKeyDown(event) {
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
@@ -42,9 +40,8 @@ function NewNote(props) {
   }
 
   return (
-    <div id="newnote" className="note note-new">
+    <div className="note note-new">
       <textarea
-        id="txtarea"
         className="newnote"
         placeholder="Start a new note..."
         value={text}

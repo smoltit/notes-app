@@ -65,7 +65,7 @@ header {
 .btn-top {
   background-color: rgb(232, 232, 232);
 }
-.newnote {
+.newnote, .editingtext {
   background: none;
   border-style: none;
   font-size: 16px;
@@ -86,9 +86,6 @@ textarea:focus {
 textarea::placeholder {
   color: rgb(92, 92, 92);
 }
-/* .dark-mode {
-  background-color: #000a1a;
-} */
 .dark-mode h1 {
   color: #e6d6f5;
 }
