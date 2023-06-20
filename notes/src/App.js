@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import Note from "./components/Note";
 import NewNote from "./components/NewNote";
+import SearchBar from "./components/SearchBar";
 
-function App() {
-  const [notes, setNotes] = useState([]);
+function App(props) {
+  const [notes, setNotes] = useState(props.start);
   function addNote(name, time, id) {
     const newNote = {id, name, time, key: id};
+    var elements = document.getElementsByClassName("note-new");
+    if (elements.length > 1) {
+      elements[1].classList.remove("note-new");
+    }
     setNotes([...notes, newNote]);
   }
   function noteList() {
@@ -20,16 +25,18 @@ function App() {
       return remainingNotes;
     });
   }
+  function toggleMode() {
+    document.body.classList.toggle("dark-mode");
+  }
   return (
     <div className="App">
       <header>
         <h1>Notes</h1>
-        <button className="btn btn-top">Toggle mode</button>
+        <button className="btn btn-top" onClick={() => toggleMode()}>Toggle mode</button>
       </header>
       <main>
         <input type="text" className="searchbar" placeholder="type to search..." />
         <div className="notes">
-          
           
           {noteList()}
 

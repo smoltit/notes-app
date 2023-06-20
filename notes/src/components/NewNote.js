@@ -7,36 +7,66 @@ function NewNote(props) {
   let day = date.getDate();
   let month = date.getMonth() + 1;
   let year = date.getFullYear();
-  
+
   let currentDate = `${day}/${month}/${year}`;
 
   const [length, setLength] = useState(500);
+
   function handleSubmit() {
-      if (document.getElementById('txtarea').value.length > 0) {
-        var text = document.getElementById("txtarea").value;
-        props.addNote(text, currentDate, nanoid());
-        document.getElementById("txtarea").value = "";
-        setLength(500);
-      }
+    if (text.length > 0) {
+      props.addNote(text, currentDate, nanoid());
+      setText("");
+      setLength(500);
+    }
   }
+
   function handleCancel() {
-    document.getElementById("txtarea").value = "";
+    setText("");
     setLength(500);
   }
-  function textLength() {
-    setLength(500 - document.getElementById('txtarea').value.length);
+
+  function handleInputChange(event) {
+    setText(event.target.value);
+    setLength(500 - event.target.value.length);
   }
-  return(
-      <div className="note">
-          <textarea id="txtarea" className="newnote" placeholder="Start a new note..." onChange={textLength} maxLength={500} required={true}></textarea>
-          <div className="note-bottom">
-            <p>{length} remaining</p>
-            <div className="buttons-bottom">
-              <button className="btn btn-bottom" onClick={handleCancel}>Cancel</button>
-              <button className="btn btn-bottom" type="submit" onClick={handleSubmit}>Save</button>
-            </div>
-          </div>
+
+  function handleKeyDown(event) {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      handleSubmit();
+    } else if (event.key === "Escape") {
+      event.preventDefault();
+      handleCancel();
+    }
+  }
+
+  const [text, setText] = useState("");
+
+  return (
+    <div id="newnote" className="note note-new">
+      <textarea
+        id="txtarea"
+        className="newnote"
+        placeholder="Start a new note..."
+        value={text}
+        onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
+        maxLength={500}
+        required={true}
+      ></textarea>
+      <div className="note-bottom">
+        <p>{length} remaining</p>
+        <div className="buttons-bottom">
+          <button className="btn btn-bottom" onClick={handleCancel}>
+            Cancel
+          </button>
+          <button className="btn btn-bottom" type="submit" onClick={handleSubmit}>
+            Save
+          </button>
         </div>
+      </div>
+    </div>
   );
 }
+
 export default NewNote;
