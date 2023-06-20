@@ -11,6 +11,7 @@ function NewNote(props) {
   let currentDate = `${day}/${month}/${year}`;
 
   const [length, setLength] = useState(500);
+  const [text, setText] = useState("");
 
   function handleSubmit() {
     if (text.length > 0) {
@@ -39,8 +40,6 @@ function NewNote(props) {
       handleCancel();
     }
   }
-
-  const [text, setText] = useState("");
 
   return (
     <div id="newnote" className="note note-new">
